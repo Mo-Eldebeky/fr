@@ -1,30 +1,79 @@
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import {
-  DarkMode,
-  Facebook,
-  Instagram,
-  KeyboardArrowDown,
-
-  LightMode,
-  Twitter,
-} from "@mui/icons-material";
-import {
-
+  alpha,
+  Badge,
+  Box,
   Container,
   IconButton,
+  InputBase,
   List,
   ListItemButton,
   ListItemText,
   Menu,
   MenuItem,
   Stack,
+  styled,
   Typography,
-  useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
-const options = ["EN", "AR"];
+import { grey } from "@mui/material/colors";
+import SearchIcon from "@mui/icons-material/Search";
 
-const Hader2 = ({setmymode}) => {
-  const them = useTheme();
+import { Person2Outlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { useState } from "react";
+const color = grey[800];
+const Searchs = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+border:"1px solid white",
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 1),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
+const options = [
+  "Show some love to MUI",
+  "Show all notification content",
+  "Hide sensitive notification content",
+  "Hide all notification content",
+];
+const Hader2 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const open = Boolean(anchorEl);
@@ -40,80 +89,49 @@ const Hader2 = ({setmymode}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
-    <Container
-      sx={{
-        bgcolor: "#2B3445",
-        mt: 2,
-      }}
-    >
-      <Stack
-        direction={"row"}
-        sx={{
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Stack direction={"row"} alignItems="center" sx={{}}>
-          <Typography
-            sx={{
-              bgcolor: "#D23F57",
-              fontSize: "10px",
-              borderRadius: "13px",
-              fontWeight: "bold",
-              padding: "2px 10px",
-              width: "fit-content",
-              mr: 2,
-            }}
+    <Container sx={{ my: 3 }}>
+      <Stack direction={"row"} justifyContent={"space-between"}>
+        <Box
+          sx={{
+            textAlign: "center",
+            color: color,
+          }}
+        >
+          <ShoppingCartOutlinedIcon fontSize={"large"} />
+          <Typography sx={{ fontWeight: "bold" }}>E-commerce</Typography>
+        </Box>
+
+        <Searchs sx={{
+          display:"flex"
+        }}>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+
+          <List
+            component="nav"
+            aria-label="Device settings"
+            sx={{ bgcolor: "background.paper" }}
           >
-            Free
-          </Typography>
-
-          <Typography
-            sx={{
-              fontSize: "12px",
-            }}
-          >
-            Free Expretion Shoping
-          </Typography>
-        </Stack>
-
-        <Stack direction={"row"} alignItems="center" >
-        <IconButton   onClick={() => {
-                return setmymode(
-                  them.palette.mode === "light" ? "dark" : "light"
-                );
-              }} >
-        {them.palette.mode=== "dark"?  <LightMode sx={{color:"#fff",fontSize:"15px"}} />:  <DarkMode sx={{color:"#fff",fontSize:"15px"}}  />}
-
-        </IconButton>
-          
-
-        
-        
-        
-
-          <List component="nav" aria-label="Device settings" sx={{p:"0",mx:1}}>
             <ListItemButton
-            sx={{
-              p:"8px 3px"
-            }}
               id="lock-button"
+              aria-haspopup="listbox"
+              aria-controls="lock-menu"
+              aria-label="when device is locked"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClickListItem}
             >
-              <ListItemText sx={{
-                ".MuiTypography-root": {color:"#fff" ,fontSize:"12px"}
-              }} secondary={options[selectedIndex]} />
-              <KeyboardArrowDown sx={{fontSize:"18px",color:"#fff"}} />
+              <ListItemText
+              
+                secondary={options[selectedIndex]}
+              />
             </ListItemButton>
           </List>
-
-
-
-
-          
           <Menu
             id="lock-menu"
             anchorEl={anchorEl}
@@ -126,8 +144,8 @@ const Hader2 = ({setmymode}) => {
           >
             {options.map((option, index) => (
               <MenuItem
-              sx={{fontSize:"13px"}}
                 key={option}
+            
                 selected={index === selectedIndex}
                 onClick={(event) => handleMenuItemClick(event, index)}
               >
@@ -135,16 +153,15 @@ const Hader2 = ({setmymode}) => {
               </MenuItem>
             ))}
           </Menu>
+        </Searchs>
 
-
-
-
-
-
-
-          <Facebook sx={{color:"#fff"}} />
-          <Twitter  sx={{mx:1 ,color:"#fff"}} />
-          <Instagram sx={{color:"#fff"}} />
+        <Stack direction={"row"} alignItems={"center"}>
+          <IconButton sx={{ mr: 2 }} aria-label="cart">
+            <StyledBadge badgeContent={4} color="primary">
+              <ShoppingCartOutlined />
+            </StyledBadge>
+          </IconButton>
+          <Person2Outlined />
         </Stack>
       </Stack>
     </Container>

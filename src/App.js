@@ -27,7 +27,7 @@ function App() {
 <CssBaseline />
 < >
       <Haeder1 setmymode={setmymode}/>
-      <Hader2 setmymode={setmymode}/>
+      <Hader2/>
       <Hader3/>
     
   
