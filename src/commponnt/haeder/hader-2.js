@@ -7,6 +7,7 @@ import {
   IconButton,
   InputBase,
   List,
+  ListItem,
   ListItemButton,
   ListItemText,
   Menu,
@@ -14,26 +15,29 @@ import {
   Stack,
   styled,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { Person2Outlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { ExpandMore, Person2Outlined, ShoppingCartOutlined } from "@mui/icons-material";
 import { useState } from "react";
 const color = grey[800];
 const Searchs = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-border:"1px solid white",
+  width:"50%",
+  borderRadius:"25px",
+border:"1px solid #777",
+
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
+
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: "auto",
+  
   },
 }));
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -68,14 +72,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 const options = [
-  "Show some love to MUI",
-  "Show all notification content",
-  "Hide sensitive notification content",
-  "Hide all notification content",
+  "All Categories",
+  "CAR",
+  "Clothes",
+  "Electronics",
 ];
 const Hader2 = () => {
+   const te= useTheme()
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const open = Boolean(anchorEl);
   const handleClickListItem = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,39 +103,51 @@ const Hader2 = () => {
             color: color,
           }}
         >
-          <ShoppingCartOutlinedIcon fontSize={"large"} />
-          <Typography sx={{ fontWeight: "bold" }}>E-commerce</Typography>
+          <ShoppingCartOutlinedIcon sx={{color:te.palette.
+// @ts-ignore
+          colorIcon.main}} fontSize={"large"}  />
+          <Typography sx={{ color:te.palette.
+// @ts-ignore
+          colorIcon.main, fontWeight: "bold" }}>E-commerce</Typography>
         </Box>
 
         <Searchs sx={{
-          display:"flex"
-        }}>
+          display:"flex",
+          p:"0 0 0 20px",
+              }}>
           <SearchIconWrapper>
-            <SearchIcon />
+            <SearchIcon  sx={{color:te.palette.colorIcon.main }}  />
           </SearchIconWrapper>
           <StyledInputBase
+          sx={{p:"0"}}
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
           />
+          <Box sx={{flexGrow:1}} ></Box>
 
           <List
             component="nav"
             aria-label="Device settings"
-            sx={{ bgcolor: "background.paper" }}
+            // @ts-ignore
+            sx={{ borderLeft:"1px solid white", width:"150px",bgcolor: te.palette.mycolor.main,"&:hover":{cursor:"pointer"},borderRadius :"0 25px 25px 0"}}
+
           >
-            <ListItemButton
+            <ListItem
               id="lock-button"
               aria-haspopup="listbox"
               aria-controls="lock-menu"
               aria-label="when device is locked"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClickListItem}
+              sx={{textAlign:"center" }}
+              
             >
               <ListItemText
               
                 secondary={options[selectedIndex]}
               />
-            </ListItemButton>
+              <ExpandMore/>
+            </ListItem>
           </List>
           <Menu
             id="lock-menu"
@@ -144,6 +161,7 @@ const Hader2 = () => {
           >
             {options.map((option, index) => (
               <MenuItem
+              sx={{fontSize:"13px"}}
                 key={option}
             
                 selected={index === selectedIndex}
@@ -158,10 +176,14 @@ const Hader2 = () => {
         <Stack direction={"row"} alignItems={"center"}>
           <IconButton sx={{ mr: 2 }} aria-label="cart">
             <StyledBadge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
+              <ShoppingCartOutlined sx={{color:te.palette.
+// @ts-ignore
+              colorIcon.main}} />
             </StyledBadge>
           </IconButton>
-          <Person2Outlined />
+          <Person2Outlined  sx={{color:te.palette.
+// @ts-ignore
+          colorIcon.main}}  />
         </Stack>
       </Stack>
     </Container>
